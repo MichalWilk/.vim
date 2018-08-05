@@ -21,9 +21,15 @@ set shiftwidth=4	" Number of auto-indent spaces
 set smartindent	        " Enable smart-indent
 set smarttab	        " Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
- 
+
+silent !mkdir $HOME/.vim/tmp > /dev/null 2>&1 "create backup dir if not exists
+set backup              " tell vim to keep a backup file
+set backupdir^=$HOME/.vim/tmp// " tell vim where to put its backup files
+set writebackup         " make backup before overwriting the current buffer
+set backupcopy=yes      " overwrite the original backup file
+set directory^=$HOME/.vim/tmp//   " tell vim where to put swap files
+
 " Advanced
-set ruler	        " Show row and column ruler information
- 
+set ruler	        " Show row and column ruler information 
 set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour
