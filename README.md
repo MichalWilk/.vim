@@ -1,1 +1,1 @@
-.vim
+Simple Vim configuration
