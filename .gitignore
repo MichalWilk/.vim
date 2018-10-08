@@ -1,0 +1,6 @@
+#Vim tmp folder
+tmp/*
+!tmp/.gitkeep
+
+#MacOS specific files
+.DS_Store
