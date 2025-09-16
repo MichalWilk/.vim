@@ -12,11 +12,19 @@ set showbreak=+++
 set errorbells
 set visualbell
 set mouse=a
-set clipboard=unnamedplus
 set wildmode=longest,list
 set colorcolumn=80
 set spell
 set signcolumn=yes
+
+" Clipboard
+if has("clipboard")
+  if has("unnamedplus")
+    set clipboard=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
+endif
 
 " Splits
 set splitbelow
@@ -37,27 +45,39 @@ set shiftwidth=4
 set softtabstop=4
 set backspace=indent,eol,start
 
-" Backup, swap, undo
+" ================= Backup, swap, undo =================
+if has("win32")
+  let s:vimtmp = expand("$HOME/vimfiles/tmp")
+else
+  let s:vimtmp = expand("$HOME/.vim/tmp")
+endif
+
 set backup
-set backupdir^=$HOME/.vim/tmp/backup//
+execute 'set backupdir^=' . s:vimtmp . '/backup//'
 set writebackup
 set backupcopy=yes
-set directory^=$HOME/.vim/tmp/swap//
+execute 'set directory^=' . s:vimtmp . '/swap//'
 set undolevels=10000
 set undofile
-set undodir=$HOME/.vim/tmp/undo//
+execute 'set undodir=' . s:vimtmp . '/undo//'
 
-silent! !mkdir -p $HOME/.vim/tmp/backup
-silent! !mkdir -p $HOME/.vim/tmp/undo
-silent! !mkdir -p $HOME/.vim/tmp/swap
+" Utwórz katalogi jeśli nie istnieją
+for d in ['backup', 'undo', 'swap']
+  if !isdirectory(s:vimtmp . '/' . d)
+    call mkdir(s:vimtmp . '/' . d, "p")
+  endif
+endfor
 
 " Leader key
 let mapleader = ","
 
 " ================= Cursor style =================
-let &t_SI.="\e[5 q"
-let &t_SR.="\e[3 q"
-let &t_EI.="\e[1 q"
+" Disable for Windows
+if !has("win32")
+  let &t_SI.="\e[5 q"
+  let &t_SR.="\e[3 q"
+  let &t_EI.="\e[1 q"
+endif
 
 " ================= Plugins =================
 call plug#begin()
@@ -85,6 +105,8 @@ colorscheme gruvbox
 
 " ================= NERDTree =================
 let NERDTreeShowHidden=1
+" Ignore unwanted files
+let NERDTreeIgnore=['\.exe$', '\.dll$', '\.sys$', 'NTUSER\.DAT', 'ntuser\.dat\.log$', '^\.git$', '^\.cache$', '^\.local$']
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && &buftype != 'terminal' | NERDTree | endif
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
