@@ -1,6 +1,19 @@
-#Vim tmp folder
-tmp/*
-!tmp/.gitkeep
+# Ignore plugins folder managed by vim-plug
+plugged/
+
+# Ignore temporary Vim files
+tmp/
+*.swp
+*.swo
+*.swn
+*.backup
+*.undo
+
+# Ignore NERDTree history
+.netrwhist
+
+# Ignore CoC extensions (they will be installed automatically)
+coc/
 
 #MacOS specific files
 .DS_Store
