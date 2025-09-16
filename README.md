@@ -1,1 +1,1 @@
-Simple Vim configuration with dark color scheme [vim-code-dark](https://github.com/tomasiser/vim-code-dark)
+My personal Vim configuration with [Gruvbox](https://github.com/morhetz/gruvbox) color scheme.
